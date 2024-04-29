@@ -1,0 +1,31 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/spfx-serve.schema.json",
+  "port": 4321,
+  "https": true,
+  "serveConfigurations": {
+    "default": {
+      "pageUrl": "https://penwernlimited.sharepoint.com/archive/Forms/AllItems.aspx",
+      "customActions": {
+        "a53d6de8-39dc-4f77-9b1d-5bf07c71b638": {
+          "location": "ClientSideExtension.ListViewCommandSet",
+          "properties": {
+            "sampleTextOne": "One item is selected in the list",
+            "sampleTextTwo": "This command is always visible."
+          }
+        }
+      }
+    },
+    "preserveButton": {
+      "pageUrl": "https://penwernlimited.sharepoint.com/archive/Forms/AllItems.aspx",
+      "customActions": {
+        "a53d6de8-39dc-4f77-9b1d-5bf07c71b638": {
+          "location": "ClientSideExtension.ListViewCommandSet",
+          "properties": {
+            "sampleTextOne": "One item is selected in the list",
+            "sampleTextTwo": "This command is always visible."
+          }
+        }
+      }
+    }
+  }
+}

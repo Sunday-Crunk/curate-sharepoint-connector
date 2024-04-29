@@ -1,0 +1,18 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/config.2.0.schema.json",
+  "version": "2.0",
+  "bundles": {
+    "preserve-button-command-set": {
+      "components": [
+        {
+          "entrypoint": "./lib/extensions/preserveButton/PreserveButtonCommandSet.js",
+          "manifest": "./src/extensions/preserveButton/PreserveButtonCommandSet.manifest.json"
+        }
+      ]
+    }
+  },
+  "externals": {},
+  "localizedResources": {
+    "PreserveButtonCommandSetStrings": "lib/extensions/preserveButton/loc/{locale}.js"
+  }
+}
