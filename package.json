@@ -16,6 +16,7 @@
     "@microsoft/sp-core-library": "1.18.2",
     "@microsoft/sp-dialog": "1.18.2",
     "@microsoft/sp-listview-extensibility": "1.18.2",
+    "@pnp/graph": "^4.0.1",
     "@pnp/sp": "^4.0.1",
     "tslib": "2.3.1"
   },

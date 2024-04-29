@@ -1,4 +1,5 @@
 import { Log } from '@microsoft/sp-core-library';
+
 import {
   BaseListViewCommandSet,
   type Command,
@@ -36,31 +37,48 @@ export default class PreserveButtonCommandSet extends BaseListViewCommandSet<IPr
     compareOneCommand.visible = false;
 
     this.context.listView.listViewStateChangedEvent.add(this, this._onListViewStateChanged);
-
+    
     return Promise.resolve();
   }
 
   public onExecute(event: IListViewCommandSetExecuteEventParameters): void {
     switch (event.itemId) {
       case 'PRESERVE':
-        // Using Dialog.alert just to show an alert; remove if not needed
         Dialog.alert('Preserve command executed!').catch(() => {
-          // handle any error from the Dialog.alert
           console.error('Failed to show alert.');
         });
-
-        // Safely logging selected items data
+  
         if ((this.context.listView.selectedRows?.length ?? 0) > 0) {
           this.context.listView.selectedRows?.forEach(row => {
-            const isadData = row.fields.filter(i=>i.displayName.includes("ISAD-"))
-            // Log each selected item's ID and all other column values
-            console.log(`Selected item ID: ${row.getValueByName('ID')}`);
-            console.log(`Selected item data: `, row);
-            console.log(`Selected item ISAD Data: `, isadData);
+            const itemId = row.getValueByName('ID');
+            //const itemRelativeUrl = row.getValueByName('FileRef');
+            
+            // Ensure that site ID and list ID are defined
+
+            const listId = this.context.pageContext.list?.id;
+            const siteId = `${window.location.hostname},${this.context.pageContext.site?.id},${this.context.pageContext.web?.id}`
+            console.log("site: ", this.context)
+            
+            const listServe = new ListServe(this.context);
+            listServe.getList().then(key => {
+                console.log("List id:", key);
+            });
+            console.log("file: ", row)
+            if (!siteId || !listId) {
+              console.error('Site ID or List ID is undefined');
+              return; // Exit if we don't have essential IDs
+            }
+  
+            // Assuming Drive ID is the same as List ID for document libraries
+            const driveId = listId; // You might want to verify or retrieve this programmatically
+  
+            // Constructing the Graph API URL
+            const graphApiUrl = `https://graph.microsoft.com/v1.0/sites/${siteId}/drives/${driveId}/items/${itemId}/content`;
+            console.log(`Graph API URL for item content: ${graphApiUrl}`);
+  
             const apiKeyService = new ApiKeyService(this.context);
             apiKeyService.getApiKey().then(key => {
                 console.log("API Key:", key);
-                // Further actions such as API calls can be handled here
             });
           });
         } else {
@@ -71,6 +89,7 @@ export default class PreserveButtonCommandSet extends BaseListViewCommandSet<IPr
         throw new Error('Unknown command');
     }
   }
+  
   
 
   private _onListViewStateChanged = (args: ListViewStateChangedEventArgs): void => {
@@ -89,6 +108,30 @@ export default class PreserveButtonCommandSet extends BaseListViewCommandSet<IPr
     this.raiseOnChange();
   }
 }
+
+class ListServe {
+  private sp: SPFI;
+
+  constructor(context: any) {
+    this.sp = spfi().using(SPFx(context));
+  }
+  public async getList(): Promise<string> {
+    try {
+      // Fetching items with 'Key' field and 'Active' property set to true
+      const items = await this.sp.web.lists
+        .top(5)();
+      console.log(items);
+      if (items.length > 0) {
+        return items[0].Id// Return the key from the first item where 'Active' is true
+      }
+      return ''; // Return empty if no keys found or none are active
+    } catch (error) {
+      console.error("Error fetching lists:", error);
+      return ''; // Return empty or throw error as needed
+    }  // Check the output in the console to see the order of items
+  }
+}
+
 class ApiKeyService {
   private sp: SPFI;
 
