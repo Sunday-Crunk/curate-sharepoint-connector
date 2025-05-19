@@ -1,4 +1,4 @@
-# curate-sharepoint-connector
+# soteriaplus-sharepoint-connector
 
 ## Summary
 

@@ -317,7 +317,24 @@ export default class PreserveButtonCommandSet extends BaseListViewCommandSet<IPr
               this.extractDriveAndItemId(spUrl);
             const type: string =
               row.getValueByName("FSObjType") === "1" ? "Folder" : "File";
-            const fileSize: string = row.getValueByName("File_x0020_Size"); // Sharepoint encodes the space character
+            const fileSize: string = row.getValueByName("File_x0020_Size");
+
+            // Extract metadata fields with "soteria-" prefix
+            const metadata: Record<string, string> = {};
+
+            // Get all field names for this row
+            const allFields = row.fields;
+
+            // Loop through all fields and find ones with soteria- prefix
+            allFields.forEach((field) => {
+              const fieldName = field.displayName;
+
+              if (fieldName.toLowerCase().startsWith("soteria-")) {
+                // Remove the 'soteria-' prefix and add to metadata object
+                const namespaceKey = fieldName.substring(8);
+                metadata[namespaceKey] = row.getValueByName(field.internalName);
+              }
+            });
 
             return {
               id: itemId,
@@ -326,6 +343,7 @@ export default class PreserveButtonCommandSet extends BaseListViewCommandSet<IPr
               name: itemName,
               fileSize,
               type,
+              metadata,
             };
           }) ?? [];
 
@@ -463,9 +481,6 @@ class ApiKeyService {
       if (!keyList) {
         throw new Error("No API key list found");
       }
-      const baseData = await this.sp.web.lists
-        .getByTitle("soteria-details")
-        .items();
 
       const items = await this.sp.web.lists
         .getByTitle("soteria-details")

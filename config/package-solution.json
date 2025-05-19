@@ -1,9 +1,9 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
   "solution": {
-    "name": "curate-sharepoint-connector-client-side-solution",
+    "name": "soteriaplus-sharepoint-connector",
     "id": "f1ed9968-58b5-46fc-8d5c-bfb14f77debf",
-    "version": "1.0.0.0",
+    "version": "1.1.1.0",
     "includeClientSideAssets": true,
     "skipFeatureDeployment": true,
     "isDomainIsolated": false,
@@ -30,10 +30,10 @@
     },
     "metadata": {
       "shortDescription": {
-        "default": "curate-sharepoint-connector description"
+        "default": "Client side solution that enables transmitting data directly from SharePoint to Soteria+"
       },
       "longDescription": {
-        "default": "curate-sharepoint-connector description"
+        "default": "Client side solution that enables transmitting data directly from SharePoint to Soteria+"
       },
       "screenshotPaths": [],
       "videoUrl": "",
@@ -46,15 +46,12 @@
         "id": "3d7a2a57-1297-4c71-8002-f9e9f4d188e2",
         "version": "1.0.0.0",
         "assets": {
-          "elementManifests": [
-            "elements.xml",
-            "ClientSideInstance.xml"
-          ]
+          "elementManifests": ["elements.xml", "ClientSideInstance.xml"]
         }
       }
     ]
   },
   "paths": {
-    "zippedPackage": "solution/curate-sharepoint-connector.sppkg"
+    "zippedPackage": "solution/soteriaplus-sharepoint-connector.sppkg"
   }
 }

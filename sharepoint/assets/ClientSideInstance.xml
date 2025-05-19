@@ -2,8 +2,8 @@
 <Elements xmlns="http://schemas.microsoft.com/sharepoint/">
     <ClientSideComponentInstance
         Title="PreserveButton"
-        Location="ClientSideExtension.ListViewCommandSet.CommandBar"
-        ListTemplateId="100"
+        Location="ClientSideExtension.ListViewCommandSet"
+        ListTemplateId="101"
         Properties="{&quot;sampleTextOne&quot;:&quot;One item is selected in the list.&quot;, &quot;sampleTextTwo&quot;:&quot;This command is always visible.&quot;}"
         ComponentId="a53d6de8-39dc-4f77-9b1d-5bf07c71b638" />
 </Elements>
