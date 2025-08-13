@@ -3,7 +3,7 @@
   "solution": {
     "name": "soteriaplus-sharepoint-connector",
     "id": "f1ed9968-58b5-46fc-8d5c-bfb14f77debf",
-    "version": "1.1.1.0",
+    "version": "1.1.1.1",
     "includeClientSideAssets": true,
     "skipFeatureDeployment": true,
     "isDomainIsolated": false,
